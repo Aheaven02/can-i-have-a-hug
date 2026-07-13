@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Can I have a hug? 🥺</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #ffe4ec, transparent 35%),
+        radial-gradient(circle at bottom right, #e7ddff, transparent 40%),
+        linear-gradient(135deg, #fff7fa, #f5f0ff);
+      color: #4b3344;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: fixed;
+      font-size: 24px;
+      opacity: 0.35;
+      animation: float 7s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      from { transform: translateY(110vh) rotate(0deg); }
+      to { transform: translateY(-20vh) rotate(360deg); }
+    }
+
+    .card {
+      width: min(92vw, 520px);
+      padding: 38px 28px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(255, 180, 205, 0.55);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(115, 70, 105, 0.18);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .emoji {
+      font-size: 64px;
+      margin-bottom: 10px;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(28px, 7vw, 42px);
+      color: #a4416c;
+    }
+
+    p {
+      margin: 0 auto 26px;
+      max-width: 410px;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      min-height: 58px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 15px 24px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover { transform: translateY(-2px) scale(1.03); }
+
+    .yes {
+      background: linear-gradient(135deg, #f46b9b, #b56ee8);
+      color: white;
+      box-shadow: 0 10px 24px rgba(195, 85, 145, 0.3);
+    }
+
+    .maybe {
+      background: #f4e9ef;
+      color: #7c4962;
+    }
+
+    .response {
+      display: none;
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #fff0f6;
+      font-size: 20px;
+      font-weight: 700;
+      color: #a4416c;
+    }
+
+    .small {
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <span class="heart" style="left:8%; animation-delay:0s;">💗</span>
+  <span class="heart" style="left:24%; animation-delay:2s;">💕</span>
+  <span class="heart" style="left:50%; animation-delay:4s;">💖</span>
+  <span class="heart" style="left:73%; animation-delay:1s;">💗</span>
+  <span class="heart" style="left:90%; animation-delay:3s;">💕</span>
+
+  <main class="card">
+    <div class="emoji">🥺🫶🏽</div>
+    <h1>Aramis, can I see you today?</h1>
+    <p>
+      I really miss you, and I would love nothing more than to be in your arms
+      for a little while. Can I please have a hug today? 💗
+    </p>
+
+    <div class="buttons">
+      <button class="yes" onclick="sayYes()">Yes, come get your hug 🥰</button>
+      <button class="maybe" id="maybeBtn" onclick="moveButton()">Hmm…</button>
+    </div>
+
+    <div class="response" id="response">
+      YAYYY 🥹💗 Text me what time I can see you!
+    </div>
+
+    <div class="small">Made with love, softness, and a very serious need for a hug.</div>
+  </main>
+
+  <script>
+    let moves = 0;
+
+    function sayYes() {
+      document.getElementById("response").style.display = "block";
+      document.getElementById("maybeBtn").style.display = "none";
+      confettiHearts();
+    }
+
+    function moveButton() {
+      const button = document.getElementById("maybeBtn");
+      moves++;
+
+      const messages = [
+        "Are you sure? 🥺",
+        "But I give good hugs 😭",
+        "Pleaseee? 💗",
+        "One tiny hug? 🫶🏽",
+        "Okay… think again 😌"
+      ];
+
+      button.textContent = messages[Math.min(moves - 1, messages.length - 1)];
+
+      if (moves >= 2) {
+        button.style.position = "fixed";
+        button.style.left = Math.random() * 70 + 10 + "vw";
+        button.style.top = Math.random() * 65 + 15 + "vh";
+        button.style.zIndex = "10";
+      }
+    }
+
+    function confettiHearts() {
+      for (let i = 0; i < 28; i++) {
+        const heart = document.createElement("span");
+        heart.textContent = ["💗", "💕", "💖", "🫶🏽"][Math.floor(Math.random() * 4)];
+        heart.style.position = "fixed";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "-40px";
+        heart.style.fontSize = Math.random() * 22 + 18 + "px";
+        heart.style.zIndex = "20";
+        heart.style.transition = "transform 2.8s linear, opacity 2.8s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.style.transform = `translateY(110vh) rotate(${Math.random() * 720}deg)`;
+          heart.style.opacity = "0";
+        }, 30);
+
+        setTimeout(() => heart.remove(), 3000);
+      }
+    }
+  </script>
+</body>
+</html>
